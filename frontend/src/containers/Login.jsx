@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { Auth } from 'aws-amplify'
 import { useAppContext } from '../lib/contextLib'
 import { useFormFields } from '../lib/hooksLib'
@@ -10,7 +9,7 @@ import './Login.css'
 
 function Login() {
 
-    const navigate = useNavigate()
+
     const { setIsAuthenticated } = useAppContext()
     const [isLoading, setIsLoading] = useState(false)
     const [fields, handleFieldChange] = useFormFields({
@@ -30,7 +29,7 @@ function Login() {
         try {
             await Auth.signIn(fields.email, fields.password)
             setIsAuthenticated(true)
-            navigate('/')
+
         } catch (error) {
             onError(error)
             setIsLoading(false)
