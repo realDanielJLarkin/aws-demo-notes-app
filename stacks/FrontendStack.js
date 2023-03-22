@@ -9,6 +9,10 @@ export function FrontendStack({ stack, app }) {
     const { bucket } = use(StorageStack)
 
     const site = new StaticSite(stack, 'ReactSite', {
+        customDomain: app.stage === 'prod' ? {
+            domainName: 'dnl-serverless-app.com',
+            domainAlias: 'wwww.dnl-serverless-app.com',
+        } : undefined,
         path: 'frontend',
         buildOutput: 'build',
         buildCommand: 'npm run build',
@@ -23,6 +27,6 @@ export function FrontendStack({ stack, app }) {
     })
 
     stack.addOutputs({
-        SiteUrl: site.url || 'http://localhost:3000',
+        SiteUrl: site.customDomainUrl || site.url || 'http://localhost:3000',
     })
 }
